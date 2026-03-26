@@ -3,9 +3,437 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stoom â€“ Game Marketplace</title>
+  <title>Stoom – Game Marketplace</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg:          #060b18;
+      --panel:       #0d1428;
+      --panel2:      #111c35;
+      --gold:        #ffd200;
+      --gold-hot:    #ffea00;
+      --gold-dim:    #d4a800;
+      --blue:        #32b4ff;
+      --blue-hot:    #80d4ff;
+      --white:       #ffffff;
+      --off-white:   #e8f2ff;
+      --muted:       #8aa0c0;
+      --red:         #ff3a3a;
+      --green:       #00e676;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 0%, rgba(255,210,0,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 35% at 80% 10%, rgba(50,180,255,0.09) 0%, transparent 50%),
+        repeating-linear-gradient(0deg,  transparent, transparent 55px, rgba(255,255,255,0.018) 55px, rgba(255,255,255,0.018) 56px),
+        repeating-linear-gradient(90deg, transparent, transparent 55px, rgba(255,255,255,0.018) 55px, rgba(255,255,255,0.018) 56px);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(6,11,24,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--gold);
+      box-shadow: 0 2px 30px rgba(255,210,0,0.18);
+    }
+    .nav-top {
+      display: flex; align-items: center;
+      padding: 0 2.5rem; height: 60px; gap: 1.5rem;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .logo-icon { width: 38px; height: 38px; filter: drop-shadow(0 0 10px rgba(255,210,0,0.7)); }
+    .logo-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.75rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-hot);
+      text-shadow: 0 0 22px rgba(255,234,0,0.65), 0 0 45px rgba(255,210,0,0.3);
+    }
+    .nav-links { display: flex; align-items: center; gap: 0.1rem; margin-left: 1.5rem; }
+    .nav-links a {
+      color: var(--white); text-decoration: none;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 3px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--gold-hot); background: rgba(255,210,0,0.12); }
+    .nav-search {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 0.5rem;
+      background: var(--panel2);
+      border: 1.5px solid rgba(255,210,0,0.4);
+      border-radius: 4px; padding: 0.4rem 0.9rem; width: 260px;
+      transition: border-color 0.2s;
+    }
+    .nav-search:focus-within { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,210,0,0.12); }
+    .nav-search input {
+      background: none; border: none; outline: none;
+      color: var(--white); font-family: 'Exo 2', sans-serif; font-size: 0.88rem; width: 100%;
+    }
+    .nav-search input::placeholder { color: var(--muted); }
+    .nav-icons { display: flex; align-items: center; gap: 0.6rem; margin-left: 0.75rem; }
+    .nav-icon-btn {
+      background: none; border: 1.5px solid rgba(255,255,255,0.15);
+      cursor: pointer; color: var(--white);
+      padding: 0.4rem 0.5rem; border-radius: 4px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      position: relative; display: flex; align-items: center;
+    }
+    .nav-icon-btn:hover { color: var(--gold-hot); border-color: var(--gold); background: rgba(255,210,0,0.09); }
+    .cart-badge {
+      position: absolute; top: -5px; right: -5px;
+      background: var(--gold); color: #000;
+      font-size: 0.58rem; font-weight: 900;
+      width: 16px; height: 16px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-bottom {
+      display: flex; align-items: center;
+      padding: 0 2.5rem; height: 34px; gap: 1.75rem;
+      background: rgba(255,210,0,0.05);
+      border-top: 1px solid rgba(255,210,0,0.18);
+    }
+    .nav-refresh {
+      background: none; border: none; cursor: pointer;
+      color: var(--gold); display: flex; align-items: center;
+      transition: transform 0.5s;
+    }
+    .nav-refresh:hover { transform: rotate(180deg); }
+    .nav-bottom a {
+      color: var(--off-white); text-decoration: none;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.83rem; font-weight: 600;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .nav-bottom a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto;
+      padding: 2.5rem 2.5rem 1.5rem;
+    }
+    .section-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .eyebrow-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .eyebrow-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,210,0,0.55), transparent); }
+
+    .carousel-wrap { position: relative; }
+    .carousel-track {
+      border-radius: 8px; overflow: hidden;
+      border: 2px solid rgba(255,210,0,0.35);
+      box-shadow: 0 0 70px rgba(255,210,0,0.1), 0 0 25px rgba(50,180,255,0.07);
+    }
+    .slide { display: none; position: relative; aspect-ratio: 16/6.5; overflow: hidden; }
+    .slide.active { display: block; }
+    .slide-bg { position: absolute; inset: 0; }
+    .s1 { background: linear-gradient(120deg, #060f2a 0%, #0d2060 35%, #060b18 100%); }
+    .s2 { background: linear-gradient(120deg, #1a0a05 0%, #3a1a05 35%, #060b18 100%); }
+    .s3 { background: linear-gradient(120deg, #061a0a 0%, #0a3018 35%, #060b18 100%); }
+    .slide-deco {
+      position: absolute; right: 5%; top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.22; pointer-events: none;
+    }
+    .slide-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(6,11,24,0.93) 0%, rgba(6,11,24,0.6) 50%, transparent 100%);
+    }
+    .slide-content { position: absolute; bottom: 0; left: 0; padding: 2rem 3rem; width: 58%; }
+    .slide-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: var(--gold); color: #000;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.73rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 0.85rem;
+    }
+    .slide-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 700;
+      line-height: 1.05; letter-spacing: 0.04em; text-transform: uppercase;
+      color: #ffffff; text-shadow: 0 2px 30px rgba(0,0,0,0.9); margin-bottom: 0.4rem;
+    }
+    .slide-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem; color: var(--blue-hot); letter-spacing: 0.07em; margin-bottom: 1rem;
+    }
+    .slide-price-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.2rem; }
+    .price-old { font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: var(--muted); text-decoration: line-through; }
+    .price-new {
+      font-family: 'Rajdhani', sans-serif; font-size: 1.85rem; font-weight: 700;
+      color: var(--gold-hot); text-shadow: 0 0 22px rgba(255,234,0,0.55);
+    }
+    .price-badge { background: var(--red); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 2px; }
+    .btn-buy {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--gold); color: #000;
+      border: none; cursor: pointer;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.7rem 1.8rem; border-radius: 4px; text-decoration: none;
+      transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+      box-shadow: 0 4px 28px rgba(255,210,0,0.4);
+    }
+    .btn-buy:hover { background: var(--gold-hot); box-shadow: 0 6px 40px rgba(255,234,0,0.6); transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: #fff;
+      cursor: pointer; font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.65rem 1.4rem; border-radius: 4px; text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s; margin-left: 0.75rem;
+    }
+    .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.07); }
+    .carousel-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(6,11,24,0.82); border: 2px solid var(--gold);
+      color: var(--gold); width: 46px; height: 46px; border-radius: 4px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 10; transition: all 0.15s; backdrop-filter: blur(6px);
+    }
+    .carousel-arrow:hover { background: var(--gold); color: #000; box-shadow: 0 0 24px rgba(255,210,0,0.45); }
+    .carousel-arrow.left  { left: -23px; }
+    .carousel-arrow.right { right: -23px; }
+    .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+    .dot {
+      width: 30px; height: 4px; border-radius: 2px;
+      background: var(--panel2); border: 1px solid rgba(255,210,0,0.25);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .dot.active { background: var(--gold); width: 50px; box-shadow: 0 0 12px rgba(255,210,0,0.55); }
+
+    /* SECTION */
+    .section { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 2rem 2.5rem; }
+    .sec-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,210,0,0.22);
+    }
+    .sec-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.55rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff;
+    }
+    .sec-title em { color: var(--gold); font-style: normal; text-shadow: 0 0 18px rgba(255,210,0,0.45); }
+    .see-all {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+      color: var(--gold); text-decoration: none; letter-spacing: 0.1em;
+      text-transform: uppercase; border-bottom: 1px solid rgba(255,210,0,0.4); padding-bottom: 1px;
+      transition: color 0.15s;
+    }
+    .see-all:hover { color: var(--gold-hot); border-color: var(--gold-hot); }
+
+    /* FILTERS */
+    .filters { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--off-white);
+    }
+    .chip {
+      background: var(--panel2); border: 1.5px solid rgba(255,255,255,0.12);
+      color: var(--off-white); font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 3px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .chip:hover { border-color: rgba(255,210,0,0.55); color: var(--gold); background: rgba(255,210,0,0.09); }
+    .chip.active {
+      background: var(--gold); color: #000; border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(255,210,0,0.35); font-weight: 700;
+    }
+
+    /* GAME GRID */
+    .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 1.1rem; }
+    .game-card {
+      background: var(--panel); border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 6px; overflow: hidden;
+      cursor: pointer; text-decoration: none; color: inherit; display: block;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .game-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 12px 40px rgba(255,210,0,0.2); }
+    .card-art {
+      width: 100%; aspect-ratio: 3/4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; position: relative; overflow: hidden;
+    }
+    .ca-1 { background: linear-gradient(145deg, #0d2060, #020818); }
+    .ca-2 { background: linear-gradient(145deg, #3a0d0d, #0a0202); }
+    .ca-3 { background: linear-gradient(145deg, #0d3a0d, #020a02); }
+    .ca-4 { background: linear-gradient(145deg, #3a2a00, #0a0800); }
+    .ca-5 { background: linear-gradient(145deg, #2a003a, #08000a); }
+    .ca-6 { background: linear-gradient(145deg, #003a3a, #000a0a); }
+    .card-art::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 50%);
+    }
+    .card-info { padding: 0.7rem 0.8rem 0.85rem; }
+    .card-name {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 700;
+      color: #ffffff; letter-spacing: 0.03em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.2rem;
+    }
+    .card-genre { font-size: 0.68rem; color: var(--blue-hot); font-family: 'Share Tech Mono', monospace; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .card-price {
+      font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 700;
+      color: var(--gold-hot); text-shadow: 0 0 10px rgba(255,234,0,0.35);
+    }
+    .card-price.free { color: var(--green); text-shadow: none; }
+    .card-disc { background: var(--red); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 2px; font-family: 'Share Tech Mono', monospace; }
+
+    /* DIVIDER */
+    .divider { max-width: 1240px; margin: 0 auto; padding: 0 2.5rem; }
+    .divider hr { border: none; height: 2px; background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); opacity: 0.4; }
+
+    /* INFO SECTION */
+    .info-section {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto;
+      padding: 2rem 2.5rem 3.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1.5px solid rgba(255,210,0,0.25);
+      border-radius: 7px; overflow: hidden;
+      box-shadow: 0 4px 30px rgba(255,210,0,0.06);
+    }
+    .panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.4rem;
+      background: rgba(255,210,0,0.07);
+      border-bottom: 1px solid rgba(255,210,0,0.2);
+    }
+    .panel-title {
+      font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: #ffffff;
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .panel-title::before {
+      content: ''; width: 4px; height: 1em;
+      background: var(--gold); border-radius: 2px;
+      box-shadow: 0 0 10px rgba(255,210,0,0.55);
+    }
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,210,0,0.12); }
+    .stat { background: var(--panel); text-align: center; padding: 1.25rem 0.5rem; }
+    .stat-val {
+      display: block; font-family: 'Rajdhani', sans-serif; font-size: 1.9rem; font-weight: 700;
+      color: var(--gold-hot); text-shadow: 0 0 22px rgba(255,234,0,0.5); line-height: 1;
+    }
+    .stat-lbl {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #ffffff; opacity: 0.8; margin-top: 0.3rem; display: block;
+    }
+    .intro-body { padding: 1.25rem 1.4rem; }
+    .intro-desc { font-size: 0.88rem; line-height: 1.75; color: var(--off-white); margin-bottom: 1.2rem; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 2px solid var(--gold); color: var(--gold);
+      font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.6rem 1.5rem; border-radius: 4px; text-decoration: none; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-cta:hover { background: var(--gold); color: #000; box-shadow: 0 0 26px rgba(255,210,0,0.45); }
+    .news-list { list-style: none; }
+    .news-item {
+      display: flex; gap: 1rem; align-items: center;
+      padding: 0.85rem 1.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer; transition: background 0.15s;
+    }
+    .news-item:hover { background: rgba(255,210,0,0.06); }
+    .news-item:last-child { border-bottom: none; }
+    .news-icon {
+      width: 44px; height: 44px; border-radius: 4px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      border: 1px solid rgba(255,210,0,0.25);
+    }
+    .ni-1 { background: linear-gradient(135deg, #1a2a5a, #0a1030); }
+    .ni-2 { background: linear-gradient(135deg, #4a1a0a, #200800); }
+    .ni-3 { background: linear-gradient(135deg, #1a3a1a, #081008); }
+    .ni-4 { background: linear-gradient(135deg, #3a3a00, #181800); }
+    .news-info { flex: 1; min-width: 0; }
+    .news-title {
+      font-family: 'Exo 2', sans-serif; font-size: 0.84rem; font-weight: 600;
+      color: #ffffff; line-height: 1.35;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.25rem;
+    }
+    .news-date { font-family: 'Share Tech Mono', monospace; font-size: 0.64rem; color: var(--gold-dim); letter-spacing: 0.06em; }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      background: rgba(4,8,18,0.98);
+      border-top: 2px solid rgba(255,210,0,0.3);
+      padding: 1.75rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .foot-logo {
+      font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); text-shadow: 0 0 16px rgba(255,210,0,0.45);
+    }
+    .foot-links { display: flex; gap: 1.5rem; }
+    .foot-links a {
+      color: var(--off-white); text-decoration: none;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.15s;
+    }
+    .foot-links a:hover { color: var(--gold); }
+    .foot-copy { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,210,0,0.35); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulseGold {
+      0%,100% { box-shadow: 0 0 70px rgba(255,210,0,0.08), 0 0 25px rgba(50,180,255,0.06); }
+      50%      { box-shadow: 0 0 100px rgba(255,210,0,0.15), 0 0 40px rgba(50,180,255,0.1); }
+    }
+    .hero { animation: fadeUp 0.55s ease both; }
+    .carousel-track { animation: pulseGold 5s ease-in-out infinite; }
+    .game-card:nth-child(1) { animation: fadeUp 0.5s 0.05s ease both; }
+    .game-card:nth-child(2) { animation: fadeUp 0.5s 0.10s ease both; }
+    .game-card:nth-child(3) { animation: fadeUp 0.5s 0.15s ease both; }
+    .game-card:nth-child(4) { animation: fadeUp 0.5s 0.20s ease both; }
+    .game-card:nth-child(5) { animation: fadeUp 0.5s 0.25s ease both; }
+    .game-card:nth-child(6) { animation: fadeUp 0.5s 0.30s ease both; }
+
+    @media (max-width: 900px) { .nav-search { display: none; } .info-section { grid-template-columns: 1fr; } }
+    @media (max-width: 680px) {
+      .game-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+      .slide-content { width: 85%; padding: 1.25rem 1.5rem; }
+      .carousel-arrow.left { left: 6px; } .carousel-arrow.right { right: 6px; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -42,7 +470,7 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffd200" stroke-width="2.2">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
-      <input type="text" placeholder="Zoek een gameâ€¦" />
+      <input type="text" placeholder="Zoek een game…" />
     </div>
 
     <div class="nav-icons">
@@ -79,7 +507,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="section-eyebrow">
-    <span class="eyebrow-text">â€” Featured games</span>
+    <span class="eyebrow-text">— Featured games</span>
     <span class="eyebrow-line"></span>
   </div>
 
@@ -105,15 +533,15 @@
         </div>
         <div class="slide-overlay"></div>
         <div class="slide-content">
-          <div class="slide-badge">ðŸ”¥ Uitgelicht</div>
+          <div class="slide-badge">🔥 Uitgelicht</div>
           <div class="slide-title">Cyber Horizon<br>Zero Dawn</div>
-          <div class="slide-sub">Action RPG &nbsp;Â·&nbsp; PC &nbsp;Â·&nbsp; 2024</div>
+          <div class="slide-sub">Action RPG &nbsp;·&nbsp; PC &nbsp;·&nbsp; 2024</div>
           <div class="slide-price-row">
-            <span class="price-old">â‚¬59,99</span>
-            <span class="price-new">â‚¬39,99</span>
+            <span class="price-old">€59,99</span>
+            <span class="price-new">€39,99</span>
             <span class="price-badge">-33%</span>
           </div>
-          <a href="#" class="btn-buy">ðŸ›’ Nu Kopen</a>
+          <a href="#" class="btn-buy">🛒 Nu Kopen</a>
           <a href="#" class="btn-secondary">Meer info</a>
         </div>
       </div>
@@ -130,11 +558,11 @@
         </div>
         <div class="slide-overlay"></div>
         <div class="slide-content">
-          <div class="slide-badge" style="background:#ff4444;color:#fff">âš”ï¸ Bestseller</div>
+          <div class="slide-badge" style="background:#ff4444;color:#fff">⚔️ Bestseller</div>
           <div class="slide-title">Dark Realm<br>Chronicles</div>
-          <div class="slide-sub">Fantasy RPG &nbsp;Â·&nbsp; PC / Console &nbsp;Â·&nbsp; 2023</div>
-          <div class="slide-price-row"><span class="price-new">â‚¬29,99</span></div>
-          <a href="#" class="btn-buy" style="background:#ff4444;box-shadow:0 4px 24px rgba(255,68,68,0.45)">ðŸ›’ Bekijk Game</a>
+          <div class="slide-sub">Fantasy RPG &nbsp;·&nbsp; PC / Console &nbsp;·&nbsp; 2023</div>
+          <div class="slide-price-row"><span class="price-new">€29,99</span></div>
+          <a href="#" class="btn-buy" style="background:#ff4444;box-shadow:0 4px 24px rgba(255,68,68,0.45)">🛒 Bekijk Game</a>
           <a href="#" class="btn-secondary">Meer info</a>
         </div>
       </div>
@@ -151,13 +579,13 @@
         </div>
         <div class="slide-overlay"></div>
         <div class="slide-content">
-          <div class="slide-badge" style="background:#00c060;color:#fff">ðŸŽ® Gratis te Spelen</div>
+          <div class="slide-badge" style="background:#00c060;color:#fff">🎮 Gratis te Spelen</div>
           <div class="slide-title">Forest<br>Legends Online</div>
-          <div class="slide-sub">MMO &nbsp;Â·&nbsp; PC &nbsp;Â·&nbsp; Free to Play</div>
+          <div class="slide-sub">MMO &nbsp;·&nbsp; PC &nbsp;·&nbsp; Free to Play</div>
           <div class="slide-price-row">
             <span class="price-new" style="color:#00e676;text-shadow:0 0 22px rgba(0,230,118,0.45)">Gratis</span>
           </div>
-          <a href="#" class="btn-buy" style="background:#00c060;box-shadow:0 4px 24px rgba(0,192,96,0.45)">â–¶ Speel Nu</a>
+          <a href="#" class="btn-buy" style="background:#00c060;box-shadow:0 4px 24px rgba(0,192,96,0.45)">▶ Speel Nu</a>
           <a href="#" class="btn-secondary">Meer info</a>
         </div>
       </div>
@@ -179,7 +607,7 @@
 <section class="section">
   <div class="sec-head">
     <h2 class="sec-title">Populaire <em>Games</em></h2>
-    <a href="#" class="see-all">Alle games â†’</a>
+    <a href="#" class="see-all">Alle games →</a>
   </div>
   <div class="filters">
     <span class="filter-label">Filter:</span>
@@ -192,51 +620,51 @@
   </div>
   <div class="game-grid">
     <a href="#" class="game-card">
-      <div class="card-art ca-1">ðŸš€</div>
+      <div class="card-art ca-1">🚀</div>
       <div class="card-info">
         <div class="card-name">Stellar Drift</div>
-        <div class="card-genre">Sci-Fi Â· Actie</div>
-        <div class="card-footer"><span class="card-price">â‚¬19,99</span><span class="card-disc">-40%</span></div>
+        <div class="card-genre">Sci-Fi · Actie</div>
+        <div class="card-footer"><span class="card-price">€19,99</span><span class="card-disc">-40%</span></div>
       </div>
     </a>
     <a href="#" class="game-card">
-      <div class="card-art ca-2">ðŸ§Ÿ</div>
+      <div class="card-art ca-2">🧟</div>
       <div class="card-info">
         <div class="card-name">Dead Sector</div>
-        <div class="card-genre">Horror Â· Survival</div>
-        <div class="card-footer"><span class="card-price">â‚¬24,99</span></div>
+        <div class="card-genre">Horror · Survival</div>
+        <div class="card-footer"><span class="card-price">€24,99</span></div>
       </div>
     </a>
     <a href="#" class="game-card">
-      <div class="card-art ca-3">ðŸŒ¿</div>
+      <div class="card-art ca-3">🌿</div>
       <div class="card-info">
         <div class="card-name">Verdant Valley</div>
-        <div class="card-genre">Indie Â· Simulatie</div>
+        <div class="card-genre">Indie · Simulatie</div>
         <div class="card-footer"><span class="card-price free">Gratis</span></div>
       </div>
     </a>
     <a href="#" class="game-card">
-      <div class="card-art ca-4">âš”ï¸</div>
+      <div class="card-art ca-4">⚔️</div>
       <div class="card-info">
         <div class="card-name">Iron Kingdoms</div>
-        <div class="card-genre">Strategie Â· RPG</div>
-        <div class="card-footer"><span class="card-price">â‚¬34,99</span><span class="card-disc">-20%</span></div>
+        <div class="card-genre">Strategie · RPG</div>
+        <div class="card-footer"><span class="card-price">€34,99</span><span class="card-disc">-20%</span></div>
       </div>
     </a>
     <a href="#" class="game-card">
-      <div class="card-art ca-5">ðŸŽï¸</div>
+      <div class="card-art ca-5">🏎️</div>
       <div class="card-info">
         <div class="card-name">Turbo Circuit</div>
-        <div class="card-genre">Racing Â· Sport</div>
-        <div class="card-footer"><span class="card-price">â‚¬14,99</span></div>
+        <div class="card-genre">Racing · Sport</div>
+        <div class="card-footer"><span class="card-price">€14,99</span></div>
       </div>
     </a>
     <a href="#" class="game-card">
-      <div class="card-art ca-6">ðŸ”®</div>
+      <div class="card-art ca-6">🔮</div>
       <div class="card-info">
         <div class="card-name">Arcane Depths</div>
-        <div class="card-genre">Fantasy Â· RPG</div>
-        <div class="card-footer"><span class="card-price">â‚¬29,99</span><span class="card-disc">-15%</span></div>
+        <div class="card-genre">Fantasy · RPG</div>
+        <div class="card-footer"><span class="card-price">€29,99</span><span class="card-disc">-15%</span></div>
       </div>
     </a>
   </div>
@@ -254,31 +682,31 @@
       <div class="stat"><span class="stat-val">24/7</span><span class="stat-lbl">Support</span></div>
     </div>
     <div class="intro-body">
-      <p class="intro-desc">Stoom is hÃ©t platform waar je games ontdekt, koopt en beheert. Sla je favorieten op, filter op genre en platform, en bouw je persoonlijke bibliotheek op. Ontworpen voor gamers, door gamers.</p>
-      <a href="#" class="btn-cta">âš™ Maak een account</a>
+      <p class="intro-desc">Stoom is hét platform waar je games ontdekt, koopt en beheert. Sla je favorieten op, filter op genre en platform, en bouw je persoonlijke bibliotheek op. Ontworpen voor gamers, door gamers.</p>
+      <a href="#" class="btn-cta">⚙ Maak een account</a>
     </div>
   </div>
 
   <div class="panel">
     <div class="panel-head">
       <span class="panel-title">Nieuws & Updates</span>
-      <a href="#" class="see-all">Alle nieuws â†’</a>
+      <a href="#" class="see-all">Alle nieuws →</a>
     </div>
     <ul class="news-list">
       <li class="news-item">
-        <div class="news-icon ni-1">ðŸš€</div>
+        <div class="news-icon ni-1">🚀</div>
         <div class="news-info"><div class="news-title">Stellar Drift krijgt grote update met nieuwe planeten</div><div class="news-date">25 maart 2026</div></div>
       </li>
       <li class="news-item">
-        <div class="news-icon ni-2">ðŸ§Ÿ</div>
+        <div class="news-icon ni-2">🧟</div>
         <div class="news-info"><div class="news-title">Dead Sector: Season 2 DLC nu beschikbaar</div><div class="news-date">22 maart 2026</div></div>
       </li>
       <li class="news-item">
-        <div class="news-icon ni-3">ðŸ†</div>
-        <div class="news-info"><div class="news-title">Stoom Lente Sale â€” tot 75% korting op 200+ games</div><div class="news-date">20 maart 2026</div></div>
+        <div class="news-icon ni-3">🏆</div>
+        <div class="news-info"><div class="news-title">Stoom Lente Sale — tot 75% korting op 200+ games</div><div class="news-date">20 maart 2026</div></div>
       </li>
       <li class="news-item">
-        <div class="news-icon ni-4">ðŸŽ®</div>
+        <div class="news-icon ni-4">🎮</div>
         <div class="news-info"><div class="news-title">Nieuw: Achievement systeem & profiel badges live</div><div class="news-date">18 maart 2026</div></div>
       </li>
     </ul>
@@ -287,14 +715,14 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">âš™ Stoom</div>
+  <div class="foot-logo">⚙ Stoom</div>
   <div class="foot-links">
     <a href="#">Privacy</a>
     <a href="#">Voorwaarden</a>
     <a href="#">Contact</a>
     <a href="#">Support</a>
   </div>
-  <div class="foot-copy">Â© 2026 Stoom â€” Alle rechten voorbehouden</div>
+  <div class="foot-copy">© 2026 Stoom — Alle rechten voorbehouden</div>
 </footer>
 
 <script>
@@ -326,7 +754,5 @@
     setTimeout(() => { this.style.transform = 'rotate(0deg)'; }, 600);
   });
 </script>
-<script src="js/app.js"></script>
 </body>
-</html>
 </html>

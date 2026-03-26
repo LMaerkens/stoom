@@ -24,7 +24,7 @@ spl_autoload_register(function ($class) {
 $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = dirname($_SERVER['SCRIPT_NAME']);
 $route = str_replace($base_path, '', $request_uri);
-$route = strtok($route, '?'); // Verwijder query string
+$route = strtok($route, '?');
 
 $routes = require __DIR__ . '/../src/api/routes.php';
 

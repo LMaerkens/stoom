@@ -1,22 +1,23 @@
 # stoom
 
-Dit project bevat een frontend en backend voor een website.
+Dit project bevat een frontend en backend voor een website (Stoom).
 
 ## Structuur
 
 - `frontend/`: Bevat de HTML, CSS en JavaScript bestanden voor de frontend.
-  - `index.html`: Hoofdpagina
-  - `css/style.css`: Stijlen
-  - `js/app.js`: JavaScript logica
-  - `images/`: Afbeeldingen
+- `backend/`: Bevat de PHP backend voor XAMPP.
+  - `public/index.php`: Ingangspunt voor de backend.
+  - `src/`: Bevat de bronbestanden (api, config, models).
+  - `database/schema.sql`: Database schema voor MySQL/MariaDB.
 
-- `backend/`: Bevat de PHP bestanden voor de backend.
-  - `index.php`: Ingangspunt voor de backend
-  - `config/config.php`: Configuratie instellingen
-  - `includes/functions.php`: Hulp functies
+## Database Installatie
+
+1. Open XAMPP en start Apache en MySQL.
+2. Ga naar `http://localhost/phpmyadmin`.
+3. Maak een nieuwe database aan genaamd `stoom`.
+4. Importeer het bestand `backend/database/schema.sql` in de nieuwe database.
 
 ## Gebruik
 
-Voor de frontend: Open `frontend/index.html` in een browser.
-
-Voor de backend: Serveer de backend bestanden met een PHP server.
+- **Frontend**: Open `frontend/index.html` in een browser.
+- **Backend**: Serveer de `backend/public` map met een PHP server (bijv. via XAMPP).

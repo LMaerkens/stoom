@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoom – Store</title>
+  <link rel="stylesheet" href="css/store.css" />
+</head>
+<body>
+
+
+<nav>
+  <div class="nav-top">
+    <a href="index.html" class="nav-logo">
+      <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" fill="#0d1428" stroke="#ffd200" stroke-width="1.5"/>
+        <circle cx="20" cy="20" r="10" fill="#111c35" stroke="#ffd200" stroke-width="1"/>
+        <circle cx="20" cy="20" r="4" fill="#ffd200"/>
+        <rect x="18.5" y="1"  width="3" height="6" rx="1.5" fill="#ffd200"/>
+        <rect x="18.5" y="33" width="3" height="6" rx="1.5" fill="#ffd200"/>
+        <rect x="1"  y="18.5" width="6" height="3" rx="1.5" fill="#ffd200"/>
+        <rect x="33" y="18.5" width="6" height="3" rx="1.5" fill="#ffd200"/>
+        <rect x="5.5"  y="5.5"  width="3" height="6" rx="1.5" fill="#ffd200" transform="rotate(-45 7 8)"/>
+        <rect x="29.5" y="26.5" width="3" height="6" rx="1.5" fill="#ffd200" transform="rotate(-45 31 29)"/>
+        <rect x="5.5"  y="26.5" width="3" height="6" rx="1.5" fill="#ffd200" transform="rotate(45 7 29)"/>
+        <rect x="29.5" y="5.5"  width="3" height="6" rx="1.5" fill="#ffd200" transform="rotate(45 31 8)"/>
+        <path d="M10 14 Q20 10 30 14" stroke="#d4a800" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M10 26 Q20 30 30 26" stroke="#d4a800" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Stoom</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="store.html" class="active">Store</a>
+      <a href="#">Library</a>
+      <a href="#">Account</a>
+    </div>
+
+    <div class="nav-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffd200" stroke-width="2.2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" placeholder="Zoek een game…" />
+    </div>
+
+    <div class="nav-icons">
+      <button class="nav-icon-btn" title="Berichten">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </button>
+      <button class="nav-icon-btn" title="Winkelwagen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge">3</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <button class="nav-refresh" id="refreshBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+    </button>
+    <a href="#">Contact</a>
+    <a href="#">Support</a>
+    <a href="#">Nieuws</a>
+    <a href="#">Community</a>
+  </div>
+</nav>
+
+<!-- ===== STORE SUBNAV ===== -->
+<div class="store-subnav">
+  <button class="subnav-btn active">
+    Browse
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <button class="subnav-btn">
+    Aanbevolen
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <button class="subnav-btn">
+    Categorieën
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <button class="subnav-btn">
+    Filter
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="store-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="filter-group">
+      <div class="filter-group-head">
+        <span class="filter-group-title">Genre</span>
+      </div>
+      <div class="filter-group-body">
+        <label class="filter-option"><input type="checkbox" checked> Actie <span class="count">142</span></label>
+        <label class="filter-option"><input type="checkbox"> RPG <span class="count">98</span></label>
+        <label class="filter-option"><input type="checkbox"> Strategie <span class="count">74</span></label>
+        <label class="filter-option"><input type="checkbox"> Sport <span class="count">55</span></label>
+        <label class="filter-option"><input type="checkbox"> Indie <span class="count">203</span></label>
+        <label class="filter-option"><input type="checkbox"> Horror <span class="count">41</span></label>
+        <label class="filter-option"><input type="checkbox"> Racing <span class="count">29</span></label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-group-head">
+        <span class="filter-group-title">Platform</span>
+      </div>
+      <div class="filter-group-body">
+        <label class="filter-option"><input type="checkbox" checked> PC <span class="count">890</span></label>
+        <label class="filter-option"><input type="checkbox"> Console <span class="count">312</span></label>
+        <label class="filter-option"><input type="checkbox"> Mobile <span class="count">156</span></label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-group-head">
+        <span class="filter-group-title">Prijs</span>
+      </div>
+      <div class="price-range">
+        <div class="price-labels"><span>€0</span><span id="priceVal">€60</span></div>
+        <input type="range" min="0" max="80" value="60" id="priceSlider" />
+        <label class="filter-option" style="margin-top:0.25rem"><input type="checkbox"> Gratis te spelen</label>
+        <label class="filter-option"><input type="checkbox"> In de aanbieding</label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-group-head">
+        <span class="filter-group-title">Beoordeling</span>
+      </div>
+      <div class="filter-group-body">
+        <label class="filter-option"><input type="checkbox"> ⭐⭐⭐⭐⭐ <span class="count">88</span></label>
+        <label class="filter-option"><input type="checkbox"> ⭐⭐⭐⭐+ <span class="count">241</span></label>
+        <label class="filter-option"><input type="checkbox"> ⭐⭐⭐+ <span class="count">534</span></label>
+      </div>
+    </div>
+
+    <button class="btn-filter">🔍 Filter toepassen</button>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="store-content">
+
+    <!-- NEW -->
+    <div class="game-row">
+      <div class="sec-head">
+        <h2 class="sec-title"><em>Nieuw</em> <span class="arrow">»</span></h2>
+        <a href="#" class="see-all">Alle nieuwe games →</a>
+      </div>
+      <div class="cards-grid">
+        <a href="#" class="game-card">
+          <div class="card-art ca-1">🚀<span class="card-badge">Nieuw</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Stellar Drift</div>
+            <div class="card-genre">Sci-Fi · Actie</div>
+            <div class="card-footer"><span class="card-price">€19,99</span><span class="card-disc">-40%</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-2">🧟<span class="card-badge sale">Hot</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Dead Sector</div>
+            <div class="card-genre">Horror · Survival</div>
+            <div class="card-footer"><span class="card-price">€24,99</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-3">🌿<span class="card-badge free">Gratis</span><button class="card-cart-btn">▶ Spelen</button></div>
+          <div class="card-info">
+            <div class="card-name">Verdant Valley</div>
+            <div class="card-genre">Indie · Simulatie</div>
+            <div class="card-footer"><span class="card-price free">Gratis</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-4">⚔️<button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Iron Kingdoms</div>
+            <div class="card-genre">Strategie · RPG</div>
+            <div class="card-footer"><span class="card-price">€34,99</span><span class="card-disc">-20%</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-5">🏎️<span class="card-badge">Nieuw</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Turbo Circuit</div>
+            <div class="card-genre">Racing · Sport</div>
+            <div class="card-footer"><span class="card-price">€14,99</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- POPULAIR -->
+    <div class="game-row">
+      <div class="sec-head">
+        <h2 class="sec-title"><em>Populair</em> <span class="arrow">»</span></h2>
+        <a href="#" class="see-all">Alle populaire games →</a>
+      </div>
+      <div class="cards-grid">
+        <a href="#" class="game-card">
+          <div class="card-art ca-6">🔮<span class="card-badge sale">Hot</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Arcane Depths</div>
+            <div class="card-genre">Fantasy · RPG</div>
+            <div class="card-footer"><span class="card-price">€29,99</span><span class="card-disc">-15%</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-7">🌊<button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Tidal Force</div>
+            <div class="card-genre">Actie · Avontuur</div>
+            <div class="card-footer"><span class="card-price">€39,99</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-8">🤖<span class="card-badge">Nieuw</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Mech Uprising</div>
+            <div class="card-genre">Sci-Fi · Strategie</div>
+            <div class="card-footer"><span class="card-price">€22,99</span><span class="card-disc">-30%</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-9">🏹<button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Shadow Hunt</div>
+            <div class="card-genre">RPG · Stealth</div>
+            <div class="card-footer"><span class="card-price">€27,99</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-10">💀<span class="card-badge sale">-50%</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Cursed Realm</div>
+            <div class="card-genre">Horror · RPG</div>
+            <div class="card-footer"><span class="card-price">€12,49</span><span class="card-disc">-50%</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- AANBEVOLEN -->
+    <div class="game-row">
+      <div class="sec-head">
+        <h2 class="sec-title"><em>Aanbevolen</em> <span class="arrow">»</span></h2>
+        <a href="#" class="see-all">Alle aanbevelingen →</a>
+      </div>
+      <div class="cards-grid">
+        <a href="#" class="game-card">
+          <div class="card-art ca-3">🌍<button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">World Builder</div>
+            <div class="card-genre">Simulatie · Strategie</div>
+            <div class="card-footer"><span class="card-price">€17,99</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-1">⚡<span class="card-badge free">Gratis</span><button class="card-cart-btn">▶ Spelen</button></div>
+          <div class="card-info">
+            <div class="card-name">Thunder Arena</div>
+            <div class="card-genre">Actie · PvP</div>
+            <div class="card-footer"><span class="card-price free">Gratis</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-5">🧙<button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Mage Academy</div>
+            <div class="card-genre">Fantasy · RPG</div>
+            <div class="card-footer"><span class="card-price">€31,99</span><span class="card-disc">-10%</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-2">🔥<span class="card-badge sale">Hot</span><button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Inferno Run</div>
+            <div class="card-genre">Actie · Platformer</div>
+            <div class="card-footer"><span class="card-price">€9,99</span><span class="card-disc">-60%</span></div>
+          </div>
+        </a>
+        <a href="#" class="game-card">
+          <div class="card-art ca-4">🎯<button class="card-cart-btn">🛒 Kopen</button></div>
+          <div class="card-info">
+            <div class="card-name">Precision Strike</div>
+            <div class="card-genre">FPS · Tactisch</div>
+            <div class="card-footer"><span class="card-price">€44,99</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('refreshBtn').addEventListener('click', function () {
+    this.style.transition = 'transform 0.55s ease';
+    this.style.transform = 'rotate(360deg)';
+    setTimeout(() => { this.style.transform = 'rotate(0deg)'; }, 600);
+  });
+
+  document.getElementById('priceSlider').addEventListener('input', function () {
+    document.getElementById('priceVal').textContent = '€' + this.value;
+  });
+
+  document.querySelectorAll('.subnav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.subnav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

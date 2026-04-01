@@ -106,13 +106,13 @@
         <span class="filter-group-title">Genre</span>
       </div>
       <div class="filter-group-body">
-        <label class="filter-option"><input type="checkbox" checked> Actie <span class="count">142</span></label>
-        <label class="filter-option"><input type="checkbox"> RPG <span class="count">98</span></label>
-        <label class="filter-option"><input type="checkbox"> Strategie <span class="count">74</span></label>
-        <label class="filter-option"><input type="checkbox"> Sport <span class="count">55</span></label>
-        <label class="filter-option"><input type="checkbox"> Indie <span class="count">203</span></label>
-        <label class="filter-option"><input type="checkbox"> Horror <span class="count">41</span></label>
-        <label class="filter-option"><input type="checkbox"> Racing <span class="count">29</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Actie" checked> Actie <span class="count">142</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="RPG" checked> RPG <span class="count">98</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Strategie" checked> Strategie <span class="count">74</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Sport" checked> Sport <span class="count">55</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Indie" checked> Indie <span class="count">203</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Horror" checked> Horror <span class="count">41</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Racing" checked> Racing <span class="count">29</span></label>
       </div>
     </div>
 
@@ -121,9 +121,9 @@
         <span class="filter-group-title">Platform</span>
       </div>
       <div class="filter-group-body">
-        <label class="filter-option"><input type="checkbox" checked> PC <span class="count">890</span></label>
-        <label class="filter-option"><input type="checkbox"> Console <span class="count">312</span></label>
-        <label class="filter-option"><input type="checkbox"> Mobile <span class="count">156</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-platform" value="pc" checked> PC <span class="count">890</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-platform" value="console" checked> Console <span class="count">312</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-platform" value="mobile" checked> Mobile <span class="count">156</span></label>
       </div>
     </div>
 
@@ -133,9 +133,9 @@
       </div>
       <div class="price-range">
         <div class="price-labels"><span>€0</span><span id="priceVal">€60</span></div>
-        <input type="range" min="0" max="80" value="60" id="priceSlider" />
-        <label class="filter-option" style="margin-top:0.25rem"><input type="checkbox"> Gratis te spelen</label>
-        <label class="filter-option"><input type="checkbox"> In de aanbieding</label>
+        <input type="range" min="0" max="60" value="60" id="priceSlider" />
+        <label class="filter-option" style="margin-top:0.25rem"><input type="checkbox" id="freeCheckbox"> Gratis te spelen</label>
+        <label class="filter-option"><input type="checkbox" id="saleCheckbox"> In de aanbieding</label>
       </div>
     </div>
 
@@ -144,9 +144,9 @@
         <span class="filter-group-title">Beoordeling</span>
       </div>
       <div class="filter-group-body">
-        <label class="filter-option"><input type="checkbox"> ⭐⭐⭐⭐⭐ <span class="count">88</span></label>
-        <label class="filter-option"><input type="checkbox"> ⭐⭐⭐⭐+ <span class="count">241</span></label>
-        <label class="filter-option"><input type="checkbox"> ⭐⭐⭐+ <span class="count">534</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-rating" value="5"> ⭐⭐⭐⭐⭐ <span class="count">88</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-rating" value="4"> ⭐⭐⭐⭐+ <span class="count">241</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-rating" value="3"> ⭐⭐⭐+ <span class="count">534</span></label>
       </div>
     </div>
 
@@ -163,7 +163,7 @@
         <a href="#" class="see-all">Alle nieuwe games →</a>
       </div>
       <div class="cards-grid">
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Sci-Fi, Actie" data-platform="pc" data-price="19.99" data-free="false" data-sale="true" data-rating="4">
           <div class="card-art ca-1">🚀<span class="card-badge">Nieuw</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Stellar Drift</div>
@@ -171,7 +171,7 @@
             <div class="card-footer"><span class="card-price">€19,99</span><span class="card-disc">-40%</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Horror, Survival" data-platform="pc" data-price="24.99" data-free="false" data-sale="false" data-rating="3">
           <div class="card-art ca-2">🧟<span class="card-badge sale">Hot</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Dead Sector</div>
@@ -179,7 +179,7 @@
             <div class="card-footer"><span class="card-price">€24,99</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Indie, Simulatie" data-platform="pc" data-price="0" data-free="true" data-sale="false" data-rating="5">
           <div class="card-art ca-3">🌿<span class="card-badge free">Gratis</span><button class="card-cart-btn">▶ Spelen</button></div>
           <div class="card-info">
             <div class="card-name">Verdant Valley</div>
@@ -187,7 +187,7 @@
             <div class="card-footer"><span class="card-price free">Gratis</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Strategie, RPG" data-platform="pc" data-price="34.99" data-free="false" data-sale="true" data-rating="4">
           <div class="card-art ca-4">⚔️<button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Iron Kingdoms</div>
@@ -195,7 +195,7 @@
             <div class="card-footer"><span class="card-price">€34,99</span><span class="card-disc">-20%</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Racing, Sport" data-platform="console" data-price="14.99" data-free="false" data-sale="false" data-rating="3">
           <div class="card-art ca-5">🏎️<span class="card-badge">Nieuw</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Turbo Circuit</div>
@@ -215,7 +215,7 @@
         <a href="#" class="see-all">Alle populaire games →</a>
       </div>
       <div class="cards-grid">
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Fantasy, RPG" data-platform="pc" data-price="29.99" data-free="false" data-sale="true" data-rating="5">
           <div class="card-art ca-6">🔮<span class="card-badge sale">Hot</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Arcane Depths</div>
@@ -223,7 +223,7 @@
             <div class="card-footer"><span class="card-price">€29,99</span><span class="card-disc">-15%</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Actie, Avontuur" data-platform="console" data-price="39.99" data-free="false" data-sale="false" data-rating="4">
           <div class="card-art ca-7">🌊<button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Tidal Force</div>
@@ -231,7 +231,7 @@
             <div class="card-footer"><span class="card-price">€39,99</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Sci-Fi, Strategie" data-platform="pc" data-price="22.99" data-free="false" data-sale="true" data-rating="4">
           <div class="card-art ca-8">🤖<span class="card-badge">Nieuw</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Mech Uprising</div>
@@ -239,7 +239,7 @@
             <div class="card-footer"><span class="card-price">€22,99</span><span class="card-disc">-30%</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="RPG, Stealth" data-platform="console" data-price="27.99" data-free="false" data-sale="false" data-rating="5">
           <div class="card-art ca-9">🏹<button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Shadow Hunt</div>
@@ -247,7 +247,7 @@
             <div class="card-footer"><span class="card-price">€27,99</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Horror, RPG" data-platform="pc" data-price="12.49" data-free="false" data-sale="true" data-rating="5">
           <div class="card-art ca-10">💀<span class="card-badge sale">-50%</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Cursed Realm</div>
@@ -267,7 +267,7 @@
         <a href="#" class="see-all">Alle aanbevelingen →</a>
       </div>
       <div class="cards-grid">
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Simulatie, Strategie" data-platform="pc" data-price="17.99" data-free="false" data-sale="false" data-rating="4">
           <div class="card-art ca-3">🌍<button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">World Builder</div>
@@ -275,7 +275,7 @@
             <div class="card-footer"><span class="card-price">€17,99</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Actie, PvP" data-platform="pc" data-price="0" data-free="true" data-sale="false" data-rating="4">
           <div class="card-art ca-1">⚡<span class="card-badge free">Gratis</span><button class="card-cart-btn">▶ Spelen</button></div>
           <div class="card-info">
             <div class="card-name">Thunder Arena</div>
@@ -283,7 +283,7 @@
             <div class="card-footer"><span class="card-price free">Gratis</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Fantasy, RPG" data-platform="pc" data-price="31.99" data-free="false" data-sale="true" data-rating="5">
           <div class="card-art ca-5">🧙<button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Mage Academy</div>
@@ -291,7 +291,7 @@
             <div class="card-footer"><span class="card-price">€31,99</span><span class="card-disc">-10%</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="Actie, Platformer" data-platform="console" data-price="9.99" data-free="false" data-sale="true" data-rating="3">
           <div class="card-art ca-2">🔥<span class="card-badge sale">Hot</span><button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Inferno Run</div>
@@ -299,7 +299,7 @@
             <div class="card-footer"><span class="card-price">€9,99</span><span class="card-disc">-60%</span></div>
           </div>
         </a>
-        <a href="#" class="game-card">
+        <a href="#" class="game-card" data-genres="FPS, Tactisch" data-platform="pc" data-price="44.99" data-free="false" data-sale="false" data-rating="4">
           <div class="card-art ca-4">🎯<button class="card-cart-btn">🛒 Kopen</button></div>
           <div class="card-info">
             <div class="card-name">Precision Strike</div>
@@ -314,15 +314,61 @@
 </div>
 
 <script>
+  const storeCards = document.querySelectorAll('.game-card[data-genres]');
+  const priceSlider = document.getElementById('priceSlider');
+  const priceVal = document.getElementById('priceVal');
+  const freeCheckbox = document.getElementById('freeCheckbox');
+  const saleCheckbox = document.getElementById('saleCheckbox');
+  const filterButton = document.querySelector('.btn-filter');
+
+  function parseSelections(name) {
+    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(input => input.value.toLowerCase());
+  }
+
+  function applyStoreFilters() {
+    const genres = parseSelections('filter-genre');
+    const platforms = parseSelections('filter-platform');
+    const ratings = parseSelections('filter-rating');
+    const maxPrice = Number(priceSlider.value);
+    const requireFree = freeCheckbox.checked;
+    const requireSale = saleCheckbox.checked;
+
+    storeCards.forEach(card => {
+      const cardGenres = card.dataset.genres.toLowerCase().split(',').map(item => item.trim());
+      const cardPlatform = card.dataset.platform.toLowerCase();
+      const cardPrice = Number(card.dataset.price);
+      const cardFree = card.dataset.free === 'true';
+      const cardSale = card.dataset.sale === 'true';
+      const cardRating = Number(card.dataset.rating);
+
+      const genreMatch = genres.length === 0 || genres.some(genre => cardGenres.includes(genre));
+      const platformMatch = platforms.length === 0 || platforms.includes(cardPlatform);
+      const freeMatch = !requireFree || cardFree;
+      const saleMatch = !requireSale || cardSale;
+      const priceMatch = cardFree || cardPrice <= maxPrice;
+      const ratingMatch = ratings.length === 0 || ratings.some(value => cardRating >= Number(value));
+
+      card.style.display = genreMatch && platformMatch && freeMatch && saleMatch && priceMatch && ratingMatch ? '' : 'none';
+    });
+  }
+
   document.getElementById('refreshBtn').addEventListener('click', function () {
     this.style.transition = 'transform 0.55s ease';
     this.style.transform = 'rotate(360deg)';
     setTimeout(() => { this.style.transform = 'rotate(0deg)'; }, 600);
   });
 
-  document.getElementById('priceSlider').addEventListener('input', function () {
-    document.getElementById('priceVal').textContent = '€' + this.value;
+  priceSlider.addEventListener('input', function () {
+    priceVal.textContent = '€' + this.value;
+    applyStoreFilters();
   });
+
+  freeCheckbox.addEventListener('change', applyStoreFilters);
+  saleCheckbox.addEventListener('change', applyStoreFilters);
+  document.querySelectorAll('input[name="filter-genre"]').forEach(el => el.addEventListener('change', applyStoreFilters));
+  document.querySelectorAll('input[name="filter-platform"]').forEach(el => el.addEventListener('change', applyStoreFilters));
+  document.querySelectorAll('input[name="filter-rating"]').forEach(el => el.addEventListener('change', applyStoreFilters));
+  filterButton.addEventListener('click', applyStoreFilters);
 
   document.querySelectorAll('.subnav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -330,6 +376,8 @@
       btn.classList.add('active');
     });
   });
+
+  applyStoreFilters();
 </script>
 
 </body>

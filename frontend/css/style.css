@@ -295,6 +295,7 @@
       color: var(--gold-hot); text-shadow: 0 0 10px rgba(255,234,0,0.35);
     }
     .card-price.free { color: var(--green); text-shadow: none; }
+    .hidden { display: none !important; }
     .card-disc { background: var(--red); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 2px; font-family: 'Share Tech Mono', monospace; }
 
     /* DIVIDER */

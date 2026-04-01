@@ -16,10 +16,23 @@ document.getElementById('nextBtn').addEventListener('click', () => goTo(cur + 1)
 dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
 setInterval(() => goTo(cur + 1), 5000);
 
+const gameCards = document.querySelectorAll('.game-card[data-genres]');
+
 document.querySelectorAll('.chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
+    const genre = chip.textContent.trim();
+
+    gameCards.forEach(card => {
+      if (genre === 'Alle') {
+        card.style.display = '';
+        return;
+      }
+
+      const genres = card.dataset.genres.split(',').map(g => g.trim().toLowerCase());
+      card.style.display = genres.includes(genre.toLowerCase()) ? '' : 'none';
+    });
   });
 });
 

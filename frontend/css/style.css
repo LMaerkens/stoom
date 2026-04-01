@@ -235,30 +235,47 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
     }
     .auth-card h1 {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.6rem;
       font-family: 'Rajdhani', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 800;
       color: var(--gold-hot);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-shadow: 0 0 14px rgba(255,234,0,0.3);
     }
     .auth-card p {
       margin-bottom: 1.3rem;
+      color: var(--off-white);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .auth-card label {
+      display: block;
+      margin-bottom: 0.36rem;
       color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
     .auth-input {
       width: 100%;
-      background: #0f1a35;
-      border: 1px solid rgba(255, 210, 0, 0.25);
-      border-radius: 5px;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      padding: 0.75rem 0.85rem;
+      border: 1px solid rgba(255, 210, 0, 0.2);
+      background: linear-gradient(145deg, #0c1530, #10233f);
       color: var(--off-white);
-      font: 0.94rem 'Exo 2', sans-serif;
-      padding: 0.62rem 0.75rem;
+      font-family: 'Exo 2', sans-serif;
       margin-bottom: 1rem;
       outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
     .auth-input:focus {
       border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(255, 210, 0, 0.16);
+      transform: translateY(-1px);
     }
     .auth-btn {
       width: 100%;

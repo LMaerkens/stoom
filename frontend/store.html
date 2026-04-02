@@ -354,6 +354,7 @@
     const maxPrice = Number(priceSlider.value);
     const requireFree = freeCheckbox.checked;
     const requireSale = saleCheckbox.checked;
+    const searchValue = document.querySelector('.nav-search input')?.value.trim().toLowerCase() || '';
 
     storeCards.forEach(card => {
       const cardGenres = card.dataset.genres.toLowerCase().split(',').map(item => item.trim());
@@ -362,6 +363,8 @@
       const cardFree = card.dataset.free === 'true';
       const cardSale = card.dataset.sale === 'true';
       const cardRating = Number(card.dataset.rating);
+      const cardName = card.querySelector('.card-name')?.textContent.toLowerCase() || '';
+      const cardGenreText = card.querySelector('.card-genre')?.textContent.toLowerCase() || '';
 
       const genreMatch = genres.length === 0 || genres.some(genre => cardGenres.includes(genre));
       const platformMatch = platforms.length === 0 || platforms.includes(cardPlatform);
@@ -369,8 +372,9 @@
       const saleMatch = !requireSale || cardSale;
       const priceMatch = cardFree || cardPrice <= maxPrice;
       const ratingMatch = ratings.length === 0 || ratings.some(value => cardRating >= Number(value));
+      const searchMatch = !searchValue || cardName.includes(searchValue) || cardGenreText.includes(searchValue);
 
-      card.style.display = genreMatch && platformMatch && freeMatch && saleMatch && priceMatch && ratingMatch ? '' : 'none';
+      card.style.display = genreMatch && platformMatch && freeMatch && saleMatch && priceMatch && ratingMatch && searchMatch ? '' : 'none';
     });
   }
 
@@ -392,6 +396,11 @@
       btn.classList.add('active');
     });
   });
+
+  const searchInput = document.querySelector('.nav-search input');
+  if (searchInput) {
+    searchInput.addEventListener('input', applyStoreFilters);
+  }
 
   applyStoreFilters();
 </script>

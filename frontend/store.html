@@ -88,10 +88,10 @@
   </button>
 </div>
 
-<!-- ===== LAYOUT ===== -->
+
 <div class="store-layout">
 
-  <!-- SIDEBAR -->
+
   <aside class="sidebar">
 
     <div class="filter-group">
@@ -99,13 +99,13 @@
         <span class="filter-group-title">Genre</span>
       </div>
       <div class="filter-group-body">
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Actie" checked> Actie <span class="count">142</span></label>
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="RPG" checked> RPG <span class="count">98</span></label>
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Strategie" checked> Strategie <span class="count">74</span></label>
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Sport" checked> Sport <span class="count">55</span></label>
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Indie" checked> Indie <span class="count">203</span></label>
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Horror" checked> Horror <span class="count">41</span></label>
-        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Racing" checked> Racing <span class="count">29</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Actie"> Actie <span class="count">142</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="RPG"> RPG <span class="count">98</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Strategie"> Strategie <span class="count">74</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Sport"> Sport <span class="count">55</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Indie"> Indie <span class="count">203</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Horror"> Horror <span class="count">41</span></label>
+        <label class="filter-option"><input type="checkbox" name="filter-genre" value="Racing"> Racing <span class="count">29</span></label>
       </div>
     </div>
 
@@ -306,6 +306,35 @@
   </main>
 </div>
 
+<!-- PURCHASE MODAL -->
+<div id="purchaseModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Game Kopen</h3>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="game-purchase-info">
+        <div class="purchase-icon">🎮</div>
+        <div class="purchase-details">
+          <h4 id="purchaseGameName">Game Naam</h4>
+          <p id="purchaseGameGenre">Genre</p>
+          <div class="purchase-price">
+            <span id="purchasePrice">€0,00</span>
+          </div>
+        </div>
+      </div>
+      <div class="purchase-confirm">
+        <p>Weet je zeker dat je deze game wilt kopen?</p>
+        <div class="purchase-buttons">
+          <button class="btn-cancel" id="cancelPurchase">Annuleren</button>
+          <button class="btn-confirm" id="confirmPurchase">🛒 Bevestigen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const storeCards = document.querySelectorAll('.game-card[data-genres]');
   const priceSlider = document.getElementById('priceSlider');
@@ -345,12 +374,6 @@
     });
   }
 
-  document.getElementById('refreshBtn').addEventListener('click', function () {
-    this.style.transition = 'transform 0.55s ease';
-    this.style.transform = 'rotate(360deg)';
-    setTimeout(() => { this.style.transform = 'rotate(0deg)'; }, 600);
-  });
-
   priceSlider.addEventListener('input', function () {
     priceVal.textContent = '€' + this.value;
     applyStoreFilters();
@@ -371,6 +394,122 @@
   });
 
   applyStoreFilters();
+</script>
+
+<script>
+// Purchase functionality
+let currentGameToBuy = null;
+
+function showPurchaseModal(gameName, gameGenre, gamePrice, gameIcon) {
+  currentGameToBuy = { name: gameName, genre: gameGenre, price: gamePrice, icon: gameIcon };
+  
+  document.getElementById('purchaseGameName').textContent = gameName;
+  document.getElementById('purchaseGameGenre').textContent = gameGenre;
+  document.getElementById('purchasePrice').textContent = gamePrice;
+  document.querySelector('.purchase-icon').textContent = gameIcon;
+  
+  document.getElementById('purchaseModal').style.display = 'flex';
+}
+
+function hidePurchaseModal() {
+  document.getElementById('purchaseModal').style.display = 'none';
+  currentGameToBuy = null;
+}
+
+function purchaseGame() {
+  if (!currentGameToBuy) return;
+  
+  // Get existing purchased games from localStorage
+  let purchasedGames = JSON.parse(localStorage.getItem('purchasedGames') || '[]');
+  
+  // Check if game is already purchased
+  const alreadyPurchased = purchasedGames.some(game => game.name === currentGameToBuy.name);
+  
+  if (alreadyPurchased) {
+    alert('Je hebt deze game al gekocht!');
+    hidePurchaseModal();
+    return;
+  }
+  
+  // Add to purchased games
+  purchasedGames.push({
+    name: currentGameToBuy.name,
+    genre: currentGameToBuy.genre,
+    price: currentGameToBuy.price,
+    icon: currentGameToBuy.icon,
+    purchasedDate: new Date().toISOString()
+  });
+  
+  // Save to localStorage
+  localStorage.setItem('purchasedGames', JSON.stringify(purchasedGames));
+
+  // Also add to installed library so library.html toont het
+  const installedGames = JSON.parse(localStorage.getItem('installedGames') || '[]');
+  const alreadyInstalled = installedGames.some(game => game.name === currentGameToBuy.name);
+  if (!alreadyInstalled) {
+    installedGames.push({
+      name: currentGameToBuy.name,
+      genre: currentGameToBuy.genre,
+      icon: currentGameToBuy.icon,
+      price: currentGameToBuy.price,
+      artClass: 'ca-1'
+    });
+    localStorage.setItem('installedGames', JSON.stringify(installedGames));
+  }
+  
+  // Show success message
+  alert(`🎉 Gefeliciteerd! "${currentGameToBuy.name}" is toegevoegd aan je bibliotheek!`);
+  
+  hidePurchaseModal();
+  
+  // Update cart badge if it exists
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const cartBadge = document.querySelector('.cart-badge');
+  if (cartBadge) {
+    const purchasedGames = JSON.parse(localStorage.getItem('purchasedGames') || '[]');
+    cartBadge.textContent = purchasedGames.length;
+    cartBadge.style.display = purchasedGames.length > 0 ? 'inline' : 'none';
+  }
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+  // Modal close buttons
+  document.getElementById('modalClose').addEventListener('click', hidePurchaseModal);
+  document.getElementById('cancelPurchase').addEventListener('click', hidePurchaseModal);
+  document.getElementById('confirmPurchase').addEventListener('click', purchaseGame);
+  
+  // Close modal when clicking outside
+  document.getElementById('purchaseModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      hidePurchaseModal();
+    }
+  });
+  
+  // Add click handlers to all buy buttons
+  document.querySelectorAll('.card-cart-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Find the game card
+      const gameCard = this.closest('.game-card');
+      if (!gameCard) return;
+      
+      const gameName = gameCard.querySelector('.card-name')?.textContent || 'Onbekende Game';
+      const gameGenre = gameCard.querySelector('.card-genre')?.textContent || 'Onbekend Genre';
+      const gamePrice = gameCard.querySelector('.card-price')?.textContent || '€0,00';
+      const gameIcon = gameCard.querySelector('.card-art')?.textContent || '🎮';
+      
+      showPurchaseModal(gameName, gameGenre, gamePrice, gameIcon);
+    });
+  });
+  
+  // Update cart badge on page load
+  updateCartBadge();
+});
 </script>
 
 </body>

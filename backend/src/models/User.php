@@ -15,4 +15,20 @@ class User extends BaseModel {
         $sql = "SELECT * FROM {$this->table} WHERE username = ?";
         return $this->query($sql, [$username])->fetch();
     }
+
+    public function findByEmail($email) {
+        $sql = "SELECT * FROM {$this->table} WHERE email = ?";
+        return $this->query($sql, [$email])->fetch();
+    }
+
+    public function verifyLogin(string $usernameOrEmail, string $password): ?array {
+        $user = str_contains($usernameOrEmail, '@')
+            ? $this->findByEmail($usernameOrEmail)
+            : $this->findByUsername($usernameOrEmail);
+
+        if (!$user) return null;
+        if (!password_verify($password, $user['password_hash'] ?? '')) return null;
+
+        return $user;
+    }
 }

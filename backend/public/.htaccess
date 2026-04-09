@@ -1,4 +1,10 @@
 RewriteEngine On
+DirectoryIndex index.php index.html
+
+# Route API calls naar api.php (zodat index.php een normale webpagina kan zijn)
+RewriteRule ^api(/.*)?$ api.php [QSA,L]
+# Pas RewriteBase aan als het project in een submap staat, bijv. /stoom/backend/public/
+# RewriteBase /stoom/backend/public/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
+RewriteRule ^(.*)$ index.php [QSA,L]
